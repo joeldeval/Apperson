@@ -3,7 +3,7 @@ App realizada con Mongo, Express, Angular, NodeJS (API REST)
 
 Instala dependencias:
     
-    npm intall
+    npm install
 
 Inicia el servidor:
 
