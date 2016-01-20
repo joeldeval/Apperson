@@ -1,24 +1,24 @@
 angular.module('Apperson', [])
 
 function mainController($scope, $http) {
-	$scope.newPersona = {};
-	$scope.personas = {};
+	$scope.newUser = {};
+	$scope.users = {};
 	$scope.selected = false;
 
 	// Obtenemos todos los datos de la base de datos
-	$http.get('/api/persona').success(function(data) {
-		$scope.personas = data;
+	$http.get('/api/user').success(function(data) {
+		$scope.users = data;
 	})
 	.error(function(data) {
 		console.log('Error: ' + data);
 	});
 
 	// Función para registrar a una persona
-	$scope.registrarPersona = function() {
-		$http.post('/api/persona', $scope.newPersona)
+	$scope.signup = function() {
+		$http.post('/api/user', $scope.newUser)
 		.success(function(data) {
-				$scope.newPersona = {}; // Borramos los datos del formulario
-				$scope.personas = data;
+				$scope.newUser = {}; // Borramos los datos del formulario
+				$scope.users = data;
 			})
 		.error(function(data) {
 			console.log('Error: ' + data);
@@ -26,11 +26,11 @@ function mainController($scope, $http) {
 	};
 
 	// Función para editar los datos de una persona
-	$scope.modificarPersona = function(newPersona) {
-		$http.put('/api/persona/' + $scope.newPersona._id, $scope.newPersona)
+	$scope.updateUSer = function(newUser) {
+		$http.put('/api/user/' + $scope.newUser._id, $scope.newUser)
 		.success(function(data) {
-				$scope.newPersona = {}; // Borramos los datos del formulario
-				$scope.personas = data;
+				$scope.newUser = {}; // Borramos los datos del formulario
+				$scope.users = data;
 				$scope.selected = false;
 			})
 		.error(function(data) {
@@ -39,11 +39,11 @@ function mainController($scope, $http) {
 	};
 
 	// Función que borra un objeto persona conocido su id
-	$scope.borrarPersona = function(newPersona) {
-		$http.delete('/api/persona/' + $scope.newPersona._id)
+	$scope.deleteUser = function(newUser) {
+		$http.delete('/api/user/' + $scope.newUser._id)
 		.success(function(data) {
-			$scope.newPersona = {};
-			$scope.personas = data;
+			$scope.newUser = {};
+			$scope.users = data;
 			$scope.selected = false;
 		})
 		.error(function(data) {
@@ -52,9 +52,9 @@ function mainController($scope, $http) {
 	};
 
 	// Función para coger el objeto seleccionado en la tabla
-	$scope.selectPerson = function(persona) {
-		$scope.newPersona = persona;
+	$scope.selectUser = function(user) {
+		$scope.newUser = user;
 		$scope.selected = true;
-		console.log($scope.newPersona, $scope.selected);
+		console.log($scope.newUser, $scope.selected);
 	};
 }

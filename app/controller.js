@@ -1,61 +1,73 @@
-var Persona = require('./modelo/persona');
+var User = require('./modelo/user');
 
-// Obtiene todos los objetos Persona de la base de datos
-exports.getPersona = function (req, res){
-	Persona.find(
-		function(err, persona) {
+// Obtiene todos los objetos User de la base de datos
+exports.getUser = function (req, res){
+	User.find(
+		function(err, user) {
 			if (err)
 				res.send(err)
-					res.json(persona); // devuelve todas las Personas en JSON
+					res.json(user); // devuelve todas las USer en JSON
 				}
 			);
 }
 
-// Guarda un objeto Persona en base de datos
-exports.setPersona = function(req, res) {
-
-		// Creo el objeto Persona
-		Persona.create(
-			{nombre : req.body.nombre,apellido: req.body.apellido, edad: req.body.edad},
-			function(err, persona) {
+// Guarda un objeto USer en base de datos
+exports.setUser = function(req, res) {
+console.log(req);
+		// Creo el objeto User
+		User.create(
+			{ names : req.body.names,
+				last_name: req.body.last_name,
+				last_name_2: req.body.last_name_2,
+				email: req.body.email,
+				password: req.body.password
+			},
+			function(err, user) {
 				if (err)
 					res.send(err);
 				// Obtine y devuelve todas las personas tras crear una de ellas
-				Persona.find(function(err, persona) {
+				User.find(function(err, user) {
 				 	if (err)
 				 		res.send(err)
-				 	res.json(persona);
+				 	res.json(user);
 				});
 			});
 
 	}
 
 // Modificamos un objeto Persona de la base de datos
-exports.updatePersona = function(req, res){
-	Persona.update( {_id : req.params.persona_id},
-					{$set:{nombre : req.body.nombre,apellido: req.body.apellido, edad: req.body.edad}},
-					function(err, persona) {
+exports.updateUser = function(req, res){
+	User.update( {_id : req.params.user_id},
+					{	$set:{
+							names : req.body.names,
+							last_name: req.body.last_name,
+							last_name_2: req.body.last_name_2,
+							email: req.body.email,
+							password: req.body.password
+						}
+					},
+					function(err, user) {
 						if (err)
 							res.send(err);
 				// Obtine y devuelve todas las personas tras crear una de ellas
-				Persona.find(function(err, persona) {
+				Persona.find(function(err, user) {
 				 	if (err)
 				 		res.send(err)
-				 	res.json(persona);
+				 	res.json(user);
 				});
 			});
 	}
 
 // Elimino un objeto Persona de la base de Datos
-exports.removePersona = function(req, res) {
-	Persona.remove({_id : req.params.persona_id}, function(err, persona) {
+exports.removeUser = function(req, res) {
+	User.remove({_id : req.params.user_id}, function(err, user) {
 		if (err)
 			res.send(err);
 			// Obtine y devuelve todas las personas tras borrar una de ellas
-			Persona.find(function(err, persona) {
+			User.find(function(err, user) {
 				if (err)
 					res.send(err)
-				res.json(persona);
+				res.json(user);
 			});
 		});
 }
